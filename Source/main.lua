@@ -60,6 +60,13 @@ sgn = false
 
 transitionTo(nextLevel, 60, 30)
 
+-- Load all lights once in the simulator to pre-bake the without having to play all levels.
+-- Run `copy-baked-lights.bat` from the root directory after running the game once
+--  in the simulator to copy the baked lights into the source folder
+if not playdate.getStats() then
+    preloadAllLights()
+end
+
 function playdate.update()
     sprPlayer.counter = sprPlayer.counter + 1
     sprPlayer.velocity.y = sprPlayer.velocity.y + 0.4
@@ -166,7 +173,7 @@ function playdate.update()
                             sprPlayer:setVisible(false)
                             killAll()
                             sgn = true
-                            --createFireflies()
+                            createFireflies(7,10)
                             sEnd:play()
                         end)
                     end)

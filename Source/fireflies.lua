@@ -4,8 +4,6 @@ local math <const> = math
 local fireflies = {}
 
 function createFireflies(amnt, _size)
-    amnt = amnt or 20
-    _size = _size or 15
     for i = 1, amnt do
         local dir = math.random(0,359)
         local firefly = {

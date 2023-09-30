@@ -33,14 +33,25 @@ local levelLights <const> = {
         Hanglight(30,5,-5,5,2000,5.5)
         Hanglight(90,5,-5,5,2000,5.5)
         Hanglight(60,5,-25,25,5000,2)
-        --createFireflies()
     end,
     l5 = function()
         Hanglight(60,10,-15,15, 4000, 7)
         Hanglight(98,20,-5,5,2000,3)
         --Hanglight(20,30,-5,5,2000,3)
-        createFireflies(7,10)
     end,
+}
+
+-- loads all lights once (used to bake light cones in the simulator)
+function preloadAllLights()
+    for _level, loadFn in pairs(levelLights) do
+        loadFn()
+    end
+    rmLights()
+end
+
+local levelFireflies <const> = {
+    -- l4 = { 20,15 },
+    -- l5 = { 7, 10 },
 }
 
 local levelPlayer <const> = {
@@ -51,7 +62,7 @@ local levelPlayer <const> = {
     l5 = {x=8,y=85},
 }
 
-level = 0
+level = 4
 curBG = nil
 local addedCol = {}
 
@@ -71,6 +82,10 @@ function nextLevel()
     rmLights()
     killFireflies()
     levelLights["l"..level]()
+    local fireflyParams = levelFireflies["l"..level]
+    if fireflyParams then
+        createFireflies(table.unpack(fireflyParams))
+    end
     curBG:moveTo(100,60)
     local coords = levelPlayer["l"..level]
     sprPlayer.velocity = {x=0,y=0}

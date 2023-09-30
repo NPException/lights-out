@@ -19,47 +19,57 @@ function Hanglight:init(x, y, min, max, time, wid)
     hanglights[#hanglights + 1] = self
 
     local frameCount = math.floor(time * 30 / 1000)
-    self.frames = table.create(frameCount + 1)
-    self.tick = 1;
-    self.lastTick = frameCount + 1
+    self.currentFrame = 0;
+    self.lastFrame = frameCount
     self.reverse = false
 
     local delta = time / frameCount
-    local overlay = gfx.image.new(240,160,gfx.kColorBlack)
+    local sharpConeImage = gfx.image.new(240, 160, gfx.kColorBlack)
+
+    local atlasPath = "gfx/baked_lights/hanglight_atlas_" .. x .. "_" .. y .. "_" .. min .. "_" .. max .. "_" .. time .. "_" .. wid .. ".pdi"
+    -- TODO: maybe for a cleaner solution this could use imagetable instead
+    self.atlas = gfx.image.new(atlasPath)
+    if self.atlas then
+        return
+    end
+
+    -- throw error if an image is missing and we're not in the simulator
+    assert(not playdate.getStats(), "missing pre-built image: " .. atlasPath)
+
+    -- pre-generate a strip of the blurred light cone
+    self.atlas = gfx.image.new(240, 160 * (frameCount + 1), gfx.kColorWhite)
 
     for i = 0, frameCount do
-        local imagePath = "gfx/light_renders/"..x.."_"..y.."_"..min.."_"..max.."_"..time.."_"..wid.."_i"..i..".pdi"
-        local frame = gfx.image.new(imagePath)
+        -- render sharp light cone
+        gfx.pushContext(sharpConeImage)
+        gfx.setColor(gfx.kColorBlack)
+        gfx.fillRect(0, 0, 240, 160)
+        gfx.setColor(gfx.kColorWhite)
+        self:drawBeam(self.animator:valueAtTime(delta * i))
+        gfx.popContext()
 
-        if not frame then
-            -- throw error if we're not in the simulator
-            assert(not playdate.getStats(), "missing pre-built image: "..imagePath)
-            -- pre-generate the blurred light cone (then copy them by hand from %PLAYDATE_SDK_PATH%/Disk/Data)
-            gfx.pushContext(overlay)
-            gfx.setColor(gfx.kColorBlack)
-            gfx.fillRect(0,0,240,160)
-            gfx.setColor(gfx.kColorWhite)
-            self:drawBeam(self.animator:valueAtTime(delta * i))
-            gfx.popContext()
+        -- render blurred light cone
+        local frame = gfx.image.new(240, 160, gfx.kColorWhite)
+        gfx.pushContext(frame)
+        sharpConeImage:drawBlurred(0, 0, 3, 2, gfx.image.kDitherTypeBayer2x2)
+        gfx.popContext()
 
-            frame = gfx.image.new(240,160,gfx.kColorWhite)
-            gfx.pushContext(frame)
-            overlay:drawBlurred(0,0,3,2,gfx.image.kDitherTypeBayer2x2)
-            gfx.popContext()
-
-            datastore.writeImage(frame, imagePath)
-        end
-        self.frames[i+1] = frame
+        -- copy frame into atlas
+        gfx.pushContext(self.atlas)
+        frame:draw(0, i * 160)
+        gfx.popContext()
     end
-    coroutine.yield()
+
+    -- store to disk for manual copy later
+    datastore.writeImage(self.atlas, atlasPath)
 end
 
 function Hanglight:drawFrame()
-    self.frames[self.tick]:draw(0,0)
-    self.tick = self.tick + (self.reverse and -1 or 1)
-    if self.tick == 1 then
+    self.atlas:draw(0, -160 * self.currentFrame)
+    self.currentFrame = self.currentFrame + (self.reverse and -1 or 1)
+    if self.currentFrame == 0 then
         self.reverse = false
-    elseif self.tick == self.lastTick then
+    elseif self.currentFrame == self.lastFrame then
         self.reverse = true
     end
 end
