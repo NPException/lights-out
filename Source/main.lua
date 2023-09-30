@@ -51,7 +51,7 @@ pHurt:setMode(Particles.modes.DECAY)
 pHurt:setSpeed(1,4)
 debug = false
 playdate.getSystemMenu():addCheckmarkMenuItem("Show FPS", debug, function(value) debug = value end)
-playdate.getSystemMenu():addCheckmarkMenuItem("Music", mus:isPlaying(), function(on) if on then mus:play(0) else mus:stop() end end)
+playdate.getSystemMenu():addOptionsMenuItem("FPS", { "30", "50" }, "30", function(fps) playdate.display.setRefreshRate(tonumber(fps)) end)
 playdate.getSystemMenu():addMenuItem("By PossiblyAx", function() print("https://possiblyaxolotl.itch.io") end)
 
 --createFireflies()
