@@ -57,7 +57,8 @@ playdate.getSystemMenu():addMenuItem("By PossiblyAx", function() print("https://
 
 sgn = false
 
---transitionTo(function() print("done") end)
+transitionTo(nextLevel, 60, 30)
+
 function playdate.update()
     sprPlayer.counter = sprPlayer.counter + 1
     sprPlayer.velocity.y = sprPlayer.velocity.y + 0.4

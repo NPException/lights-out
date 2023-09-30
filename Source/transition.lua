@@ -1,29 +1,43 @@
-local tX = 200
-local tS = 5
+import "CoreLibs/math"
 
-function next()
-    nextLevel()
-end
+local math <const> = playdate.math
 
-function transitionTo(nextFunc)
-    tS = 5
+local durationInTicks = nil -- how long the duration lasts
+local deltaPerTick = nil -- range of 0.0 - 1.0 to shift per update
+local tick = nil -- current tick in the update
+local transitioned = false -- true when next() has been called
+
+local next = nil -- function to call mid-transition
+
+function transitionTo(nextFunc, duration, startTick)
+    durationInTicks = duration or 30
+    deltaPerTick = 1.0 / durationInTicks
+    transitioned = false
+    tick = startTick or 0
     next = nextFunc
 end
 
 function updateTransition()
-    if tX >= 230 then
-        next()
-        tS = -5
-        tX = 225
-    end
-    if tS ~= 0 and tX >= 0 then
-        tX = tX + tS
-    elseif tX <= 0 then
-        tX = 0
-        tS = 0
+    if tick >= durationInTicks then
+        return
     end
 
-    playdate.graphics.fillRect(0,0,tX,160)
+    local delta = deltaPerTick * tick
+    if not transitioned and delta >= 0.5 then
+        next()
+        transitioned = true
+    end
+    -- increment tick after current delta has been calculated
+    tick = tick + 1
+
+    local x = nil
+    if not transitioned then
+        x = math.lerp(200, -300, delta)
+    else
+        x = math.lerp(-300, 200, delta)
+    end
+
+    playdate.graphics.fillRect(x,0,300,160)
 end
 
 function sign(number)
