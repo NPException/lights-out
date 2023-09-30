@@ -62,7 +62,7 @@ local levelPlayer <const> = {
     l5 = {x=8,y=85},
 }
 
-level = 4
+level = 0
 curBG = nil
 local addedCol = {}
 
