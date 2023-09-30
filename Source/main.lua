@@ -192,8 +192,8 @@ function playdate.update()
     gfx.sprite.update()
 
     gfx.setImageDrawMode(gfx.kDrawModeWhiteTransparent)
-    imgOverlay:drawBlurred(-20,-20,3,2,gfx.image.kDitherTypeBayer2x2)
-    --imgOverlay:draw(-20,-20)
+    --imgOverlay:drawBlurred(-20,-20,3,2,gfx.image.kDitherTypeBayer2x2)
+    imgOverlay:draw(-20,-20)
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
     --updateLights()
 
