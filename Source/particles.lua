@@ -30,8 +30,8 @@ function updateFireflies()
     for i = 1, #fireflies do
         local ffly = fireflies[i]
         gfx.fillCircleAtPoint(ffly.x,ffly.y,math.sin(playdate.getElapsedTime()+ffly.aniOffset)*2+ffly.size)
-        ffly.x += ffly.dx * 0.5
-        ffly.y += ffly.dy * 0.5
+        ffly.x = ffly.x + (ffly.dx * 0.5)
+        ffly.y = ffly.y + (ffly.dy * 0.5)
 
         if ffly.x > 235 then ffly.x = -30 elseif ffly.x < -30 then ffly.x = 235 end
         if ffly.y > 145 then ffly.y = -30 elseif ffly.y < -30 then ffly.y = 145 end

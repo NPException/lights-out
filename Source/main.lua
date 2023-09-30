@@ -59,8 +59,8 @@ sgn = false
 
 --transitionTo(function() print("done") end)
 function playdate.update()
-    sprPlayer.counter += 1
-    sprPlayer.velocity.y += 0.4
+    sprPlayer.counter = sprPlayer.counter + 1
+    sprPlayer.velocity.y = sprPlayer.velocity.y + 0.4
 
     if not sprPlayer.onFloor and playing then
         if sprPlayer.counter <= 4 and sprPlayer.frame ~= 11 then
@@ -152,7 +152,25 @@ function playdate.update()
         playing = false
         mus:stop()
         sprPlayer:setImage(tabPlayer[1])
-        playdate.timer.new(1000,function() sprPlayer:setImage(tabPlayer[2]) playdate.timer.new(1000,function() sprPlayer:setImage(tabPlayer[3]) playdate.timer.new(1000,function() sprPlayer:setImage(tabPlayer[2]) playdate.timer.new(1000,function() sprPlayer:setImage(tabPlayer[1]) playdate.timer.new(3000,function() sprPlayer:setVisible(false) killAll() sgn = true --[[createFireflies()]] sEnd:play() end) end) end) end) end)
+        playdate.timer.new(1000, function()
+            sprPlayer:setImage(tabPlayer[2])
+            playdate.timer.new(1000, function()
+                sprPlayer:setImage(tabPlayer[3])
+                playdate.timer.new(1000, function()
+                    sprPlayer:setImage(tabPlayer[2])
+                    playdate.timer.new(1000, function()
+                        sprPlayer:setImage(tabPlayer[1])
+                        playdate.timer.new(3000, function()
+                            sprPlayer:setVisible(false)
+                            killAll()
+                            sgn = true
+                            --createFireflies()
+                            sEnd:play()
+                        end)
+                    end)
+                end)
+            end)
+        end)
     end
     
     gfx.clear()
@@ -184,7 +202,7 @@ function playdate.update()
     end
 
     if debug then
-    playdate.drawFPS(0,0)
+        playdate.drawFPS(0,0)
     end
     playdate.timer.updateTimers()
     pHurt:update()

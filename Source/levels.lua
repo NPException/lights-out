@@ -53,7 +53,7 @@ curBG = nil
 local addedCol = {}
 
 function nextLevel()
-    level += 1
+    level = level + 1
     if curBG ~= nil then curBG:remove() end
     curBG = gfx.sprite.new(levelBGs["l"..level])
     local colls = levelColls["l"..level]

@@ -40,8 +40,8 @@ function Particle:moveTo(x,y)
 end
 
 function Particle:moveBy(x,y)
-    self.x += x
-    self.y += y
+    self.x = self.x + x
+    self.y = self.y + y
 end
 
 function Particle:getPos()
@@ -154,7 +154,7 @@ end
 local function decay(partlist, decay)
     for part = 1, #partlist, 1 do
         local particle = partlist[part]
-        particle.size -= decay
+        particle.size = particle.size - decay
 
         if particle.size <= 0 then
             particle.size = 0
@@ -177,7 +177,7 @@ end
 local function disappear(partlist)
     for part = 1, #partlist, 1 do
         local particle = partlist[part]
-        particle.lifespan -= .1
+        particle.lifespan = particle.lifespan - .1
     end
     for part = 1, #partlist, 1 do
         local particle = partlist[part]
@@ -195,10 +195,10 @@ local function loop(partlist, bounds)
         local xDif , yDif = bounds[3] - bounds[1], bounds[4] - bounds[2]
         for part = 1, #partlist, 1 do
             local particle = partlist[part]
-            if particle.x > bounds[3] then particle.x -= xDif
-            elseif particle.x < bounds[1] then particle.x += xDif end
-            if particle.y > bounds[4] then particle.y -= yDif
-            elseif particle.y < bounds[2] then particle.y += yDif end
+            if particle.x > bounds[3] then particle.x = particle.x - xDif
+            elseif particle.x < bounds[1] then particle.x = particle.x + xDif end
+            if particle.y > bounds[4] then particle.y = particle.y - yDif
+            elseif particle.y < bounds[2] then particle.y = particle.y + yDif end
         end
     end
 
@@ -256,8 +256,8 @@ function ParticleCircle:update()
             playdate.graphics.drawCircleAtPoint(circ.x, circ.y, circ.size)
         end
 
-        circ.x += math.sin(math.rad(circ.dir)) * circ.speed
-        circ.y -= math.cos(math.rad(circ.dir)) * circ.speed
+        circ.x = circ.x + (math.sin(math.rad(circ.dir)) * circ.speed)
+        circ.y = circ.y - (math.cos(math.rad(circ.dir)) * circ.speed)
 
         self.particles[part] = circ
     end
@@ -348,10 +348,10 @@ function ParticlePoly:update()
             playdate.graphics.drawPolygon(table.unpack(polygon))
         end
 
-        poly.x += math.sin(math.rad(poly.dir)) * poly.speed
-        poly.y = poly.y - math.cos(math.rad(poly.dir)) * poly.speed
+        poly.x = poly.x + (math.sin(math.rad(poly.dir)) * poly.speed)
+        poly.y = poly.y - (math.cos(math.rad(poly.dir)) * poly.speed)
 
-        poly.rotation += poly.angular
+        poly.rotation = poly.rotation + poly.angular
 
         self.particles[part] = poly
     end
@@ -459,10 +459,10 @@ function ParticleImage:update()
 
         img.image:drawRotated(img.x,img.y,img.rotation,img.size)
 
-        img.rotation += img.angular
+        img.rotation = img.rotation + img.angular
 
-        img.x += math.sin(math.rad(img.dir)) * img.speed
-        img.y = img.y - math.cos(math.rad(img.dir)) * img.speed
+        img.x = img.x + (math.sin(math.rad(img.dir)) * img.speed)
+        img.y = img.y - (math.cos(math.rad(img.dir)) * img.speed)
 
         self.particles[part] = img
     end
@@ -490,10 +490,10 @@ function ParticleImageBasic:update()
 
         img.image:drawScaled(img.x,img.y,img.size)
 
-        img.rotation += img.angular
+        img.rotation = img.rotation + img.angular
 
-        img.x += math.sin(math.rad(img.dir)) * img.speed
-        img.y = img.y - math.cos(math.rad(img.dir)) * img.speed
+        img.x = img.x + (math.sin(math.rad(img.dir)) * img.speed)
+        img.y = img.y - (math.cos(math.rad(img.dir)) * img.speed)
 
         self.particles[part] = img
     end
@@ -541,8 +541,8 @@ function ParticlePixel:update()
         
         playdate.graphics.drawPixel(pix.x,pix.y,pix.size)
 
-        pix.x += math.sin(math.rad(pix.dir)) * pix.speed
-        pix.y -= math.cos(math.rad(pix.dir)) * pix.speed
+        pix.x = pix.x + (math.sin(math.rad(pix.dir)) * pix.speed)
+        pix.y = pix.y - (math.cos(math.rad(pix.dir)) * pix.speed)
 
         self.particles[part] = pix
     end

@@ -17,7 +17,7 @@ function updateTransition()
         tX = 225
     end
     if tS ~= 0 and tX >= 0 then
-        tX += tS
+        tX = tX + tS
     elseif tX <= 0 then
         tX = 0
         tS = 0
