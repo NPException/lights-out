@@ -1,7 +1,8 @@
-name=Lights Out
+name=Lights Out (NPE mod)
 author=PossiblyAxolotl
 description=I just finished my work for the night, time for bed.
-bundleID=com.PossiblyAxolotl.lights
+bundleID=com.PossiblyAxolotl.lights.npemod
 version=0.0.1
 imagepath=launcher
-buildNumber=00001imagePath=launcher
+buildNumber=1
+imagePath=launcher
