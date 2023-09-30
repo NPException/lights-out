@@ -48,12 +48,10 @@ function Hanglight:init(x,y,min,max, time, wid)
     self.x = x * 2
     self.y = y
     self.wid = wid
-    self.time = time
-    self.min = min
-    self.max = max
     self.amount = max-min
     self.animator = gfx.animator.new(time, min, max,  playdate.easingFunctions.inOutQuad)
-    self.toMax = true
+    self.animator.reverses = true
+    self.animator.repeatCount = -1
     hanglights[#hanglights+1] = self
 end
 
@@ -61,10 +59,6 @@ function Hanglight:drawBeam()
     local rad = rads(self.animator:currentValue())
     local sin = sins(rad)*self.amount
     gfx.fillTriangle(self.x,self.y*2,self.x+20*self.wid - sin, 200, self.x-20*self.wid - sin,200)
-    if self.animator:ended() then
-        self.toMax = not self.toMax
-        if self.toMax then self.animator = gfx.animator.new(self.time, self.min, self.max,  playdate.easingFunctions.inOutSine) else self.animator = gfx.animator.new(self.time,self.max,self.min,  playdate.easingFunctions.inOutSine) end
-    end
 end
 function Hanglight:drawLight()
     imgLight:drawCentered(self.x/2,self.y)
