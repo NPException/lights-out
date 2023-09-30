@@ -1,3 +1,5 @@
+import "hanglights.lua"
+
 local gfx <const> = playdate.graphics
 local levelBGs <const> = {
     l1 = gfx.image.new("gfx/bgs/lv1"),
@@ -40,6 +42,7 @@ local levelLights <const> = {
         createFireflies(7,10)
     end,
 }
+
 local levelPlayer <const> = {
     l1 = {x=100,y=100},
     l2 = {x=8,y=8},

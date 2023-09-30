@@ -28,10 +28,7 @@ function Hanglight:init(x, y, min, max, time, wid)
     local overlay = gfx.image.new(240,160,gfx.kColorBlack)
 
     for i = 0, frameCount do
-        if i % 10 == 0 then
-            coroutine.yield()
-        end
-        local imagePath = "gfx/light_renders/"..tostring(x).."_"..tostring(y).."_"..tostring(min).."_"..tostring(max).."_"..tostring(time).."_"..tostring(wid).."_i"..tostring(i)..".pdi"
+        local imagePath = "gfx/light_renders/"..x.."_"..y.."_"..min.."_"..max.."_"..time.."_"..wid.."_i"..i..".pdi"
         local frame = gfx.image.new(imagePath)
 
         if not frame then
@@ -54,6 +51,7 @@ function Hanglight:init(x, y, min, max, time, wid)
         end
         self.frames[i+1] = frame
     end
+    coroutine.yield()
 end
 
 function Hanglight:drawFrame()
