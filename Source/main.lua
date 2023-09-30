@@ -40,20 +40,20 @@ local sHurt = playdate.sound.sampleplayer.new("sfx/hurt")
 
 local imgGN = gfx.image.new("gfx/gn")
 
+local mus = playdate.sound.fileplayer.new("sfx/eepy")
+mus:play(0)
+local sEnd = playdate.sound.sampleplayer.new("sfx/end")
+
 local pHurt = ParticleCircle(200,120)
 pHurt:setSize(5,7)
 pHurt:setMode(Particles.modes.DECAY)
 pHurt:setSpeed(1,4)
 debug = false
-playdate.getSystemMenu():addCheckmarkMenuItem("Light Mode", false, function(value) playdate.display.setInverted(value) end)
-playdate.getSystemMenu():addCheckmarkMenuItem("Show FPS", false, function(value) debug = value end)
+playdate.getSystemMenu():addCheckmarkMenuItem("Show FPS", debug, function(value) debug = value end)
+playdate.getSystemMenu():addCheckmarkMenuItem("Music", mus:isPlaying(), function(on) if on then mus:play(0) else mus:stop() end end)
 playdate.getSystemMenu():addMenuItem("By PossiblyAx", function() print("https://possiblyaxolotl.itch.io") end)
 
 --createFireflies()
-
-mus = playdate.sound.fileplayer.new("sfx/eepy")
-mus:play(0)
-local sEnd = playdate.sound.sampleplayer.new("sfx/end")
 
 sgn = false
 
