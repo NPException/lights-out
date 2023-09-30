@@ -179,7 +179,7 @@ function playdate.update()
     
     gfx.pushContext(imgOverlay)
     gfx.setColor(gfx.kColorBlack)
-    gfx.fillRect(0,0,400,240)
+    gfx.fillRect(0,0,240,160)
     gfx.setColor(gfx.kColorWhite)
     --gfx.fillRect(5,5,50,50)
     updateFireflies()
