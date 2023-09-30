@@ -1,6 +1,4 @@
 # lights-out
-a Playdate game I made for PlayJam 3
+a Playdate game made by PossiblyAxolotl for PlayJam 3 [(original repo here)](https://github.com/PossiblyAxolotl/lights-out)
 
-thought some people may wanna see how I did the light stuff or something, have fun :)
-
-full builds on https://possiblyaxolotl.itch.io/lights-out
+full builds of the original on https://possiblyaxolotl.itch.io/lights-out
