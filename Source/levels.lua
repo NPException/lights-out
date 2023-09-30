@@ -18,12 +18,6 @@ local levelLights <const> = {
         Hanglight(60,15,-15,15, 4000, 7)
         Hanglight(110,30,-5,5,2000,3)
     end,
-    l5 = function()
-        Hanglight(60,10,-15,15, 4000, 7)
-        Hanglight(98,20,-5,5,2000,3)
-        --Hanglight(20,30,-5,5,2000,3)
-        --createFireflies(10,10)
-    end,
     l2 = function() 
         Hanglight(15,10,-15,20,3000,5)
         Hanglight(110,25,-5,5,2000,4) 
@@ -38,14 +32,20 @@ local levelLights <const> = {
         Hanglight(90,5,-5,5,2000,5.5)
         Hanglight(60,5,-25,25,5000,2)
         --createFireflies()
-    end
+    end,
+    l5 = function()
+        Hanglight(60,10,-15,15, 4000, 7)
+        Hanglight(98,20,-5,5,2000,3)
+        --Hanglight(20,30,-5,5,2000,3)
+        createFireflies(7,10)
+    end,
 }
 local levelPlayer <const> = {
     l1 = {x=100,y=100},
-    l5 = {x=8,y=85},
     l2 = {x=8,y=8},
     l3 = {x=8,y=125},
-    l4 = {x=8,y=100}
+    l4 = {x=8,y=100},
+    l5 = {x=8,y=85},
 }
 
 level = 0
