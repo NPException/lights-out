@@ -1,2 +1,3 @@
+@echo OFF
 call build.bat
-%PLAYDATE_SDK_PATH%\bin\PlaydateSimulator.exe .\out\game.pdx
+if NOT %ERRORLEVEL% == 1 %PLAYDATE_SDK_PATH%\bin\PlaydateSimulator.exe .\out\game.pdx
