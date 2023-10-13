@@ -34,7 +34,7 @@ function Hanglight:init(x, y, min, max, time, wid)
     end
 
     -- throw error if an image is missing and we're not in the simulator
-    assert(not playdate.getStats(), "missing pre-built image: " .. atlasPath)
+    assert(not playdate.isSimulator, "missing pre-built image: " .. atlasPath)
 
     -- pre-generate a strip of the blurred light cone
     self.atlas = gfx.image.new(240, 160 * (frameCount + 1), gfx.kColorWhite)
